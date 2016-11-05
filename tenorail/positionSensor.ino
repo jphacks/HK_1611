@@ -8,7 +8,7 @@ int getPosition(){
 
 int positionValue = analogRead( POSITION_PIN );
 
-  Serial.println(map(positionValue, VALUE_1, VALUE_2, POSITION_1, POSITION_2));
+//  Serial.println(map(positionValue, VALUE_1, VALUE_2, POSITION_1, POSITION_2));
 
  return map(positionValue, VALUE_1, VALUE_2, POSITION_1, POSITION_2); 
    

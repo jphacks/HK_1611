@@ -55,8 +55,7 @@ void caterpillar(int touch_position) {
 }
 
 void touchTurnOff(int touch_position) {
-
-  if (touch_position >= 0) {
+{
     if (!begin_flag) {
       allTurnOn(55, 55, 55);
       begin_flag = true;

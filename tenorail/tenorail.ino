@@ -37,11 +37,11 @@ if(prev_status != status){
   begin_flag = false;
 }
 
-if(status == "Hamon"){
+if(status.equals("Hamon")){
   ripple(dPosition);
-}else if(status == "Caterpillar"){
+}else if(status.equals("Caterpillar")){
   caterpillar(dPosition);
-}else if(status == "Touch") {
+}else if(status.equals("Touch")) {
   touchTurnOff(dPosition);
 }
 
