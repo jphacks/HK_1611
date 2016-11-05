@@ -41,12 +41,14 @@ void caterpillar(int touch_position) {
 
     if (touch_position - prev_touch_position > 0) {
       for (int i = 0; i < touch_position - prev_touch_position; i++) {
-        turnOff(caterpillar_position + i - 1,0);
+ {
+     
         turnOn(caterpillar_position + i, 0, 55, 0, 0);
         turnOn(caterpillar_position + i+1, 0, 55, 0, 0);
         turnOn(caterpillar_position + i+2, 0, 55, 0, 0);
         turnOn(caterpillar_position + i+3, 0, 55, 0, 0);
         turnOn(caterpillar_position + i+4, 55, 0, 0, 30);
+        turnOff(caterpillar_position + i - 1,0);
       }
       caterpillar_position = touch_position;
       prev_touch_position = touch_position;
@@ -67,6 +69,15 @@ void touchTurnOff(int touch_position) {
     turnOff(touch_position - i, 0);
   }
 
+}
+
+void custom(){
+
+for(i = 0; i < 10; i++){
+
+  delay(100);
+}
+  
 }
 
 void turnOn(int pixel, int r , int g, int b, int delayval) {

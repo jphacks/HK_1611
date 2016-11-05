@@ -10,7 +10,7 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //LEDの光らせ方
-String status = "Caterpillar";
+String status = "1";
 String prev_status = "";
 bool begin_flag = false;
 
@@ -30,6 +30,8 @@ void loop() {
 
   getStatus();
 
+  getMotion();
+
   int dPosition = getPosition();
 
 if(prev_status != status){
@@ -37,12 +39,14 @@ if(prev_status != status){
   begin_flag = false;
 }
 
-if(status.equals("Hamon")){
+if(status.equals("1")){
   ripple(dPosition);
-}else if(status.equals("Caterpillar")){
+}else if(status.equals("2")){
   caterpillar(dPosition);
-}else if(status.equals("Touch")) {
+}else if(status.equals("3")) {
   touchTurnOff(dPosition);
+}else {
+  
 }
 
 prev_status = status;
