@@ -7,7 +7,7 @@ var async = require('async');
 
 app = express();
 
-app.use(express.static('views'));
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function(req, res, next){
@@ -39,16 +39,12 @@ var sp = new serialport(portName, {
 
 var pattern;
 
-app.get('/', function(req,res){
-  res.render('index');
-});
-
 app.get('/change', function(req, res) {
   var id_string = "";
   id = req.query.id;
   console.log(req.query.id);
   if(id == 1 || id == 2 || id == 3){
-    id_string = id_string + ".";
+    id_string = id_string + id + ".";
     var exec = require('child_process').exec;
     exec("python test.py " + id_string);
     res.redirect("/");
@@ -127,9 +123,6 @@ app.post('/custom', function(req, res) {
 sp.on('data', function(data) {
   console.log('data received: ' + data);
   if(data == "Hamon"){
-    setTimeout(function(){
-      console.log('Hamon');
-    }, 1000);
   }
 });
 
