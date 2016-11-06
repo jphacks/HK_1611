@@ -14,6 +14,11 @@ String status = "1";
 String prev_status = "";
 bool begin_flag = false;
 
+
+int r[150];
+int g[150];
+int b[150];
+
 void setup() {
 
 #if defined (__AVR_ATtiny85__)
@@ -30,8 +35,6 @@ void loop() {
 
   getStatus();
 
-  getMotion();
-
   int dPosition = getPosition();
 
 if(prev_status != status){
@@ -45,8 +48,8 @@ if(status.equals("1")){
   caterpillar(dPosition);
 }else if(status.equals("3")) {
   touchTurnOff(dPosition);
-}else {
-  
+}else if(status.equals("4")){
+  custom(dPosition);
 }
 
 prev_status = status;

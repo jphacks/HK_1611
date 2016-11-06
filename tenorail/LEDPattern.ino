@@ -1,6 +1,8 @@
 int caterpillar_position = 0;
 int prev_touch_position = 0;
 
+int touch_position_status[25];
+
 void ripple(int touch_position) {
 
   if (touch_position >= 0) {
@@ -30,54 +32,63 @@ void caterpillar(int touch_position) {
   if (touch_position >= 0) {
 
     if (!begin_flag) {
-        turnOn(0, 0, 55, 0, 0);
-        turnOn(1, 0, 55, 0, 0);
-        turnOn(2, 0, 55, 0, 0);
-        turnOn(3, 0, 55, 0, 0);
-        turnOn(4, 55, 0, 0, 0);
-      
+      turnOn(0, 0, 55, 0, 0);
+      turnOn(1, 0, 55, 0, 0);
+      turnOn(2, 0, 55, 0, 0);
+      turnOn(3, 0, 55, 0, 0);
+      turnOn(4, 55, 0, 0, 0);
+
       begin_flag = true;
     }
 
     if (touch_position - prev_touch_position > 0) {
       for (int i = 0; i < touch_position - prev_touch_position; i++) {
- {
-     
-        turnOn(caterpillar_position + i, 0, 55, 0, 0);
-        turnOn(caterpillar_position + i+1, 0, 55, 0, 0);
-        turnOn(caterpillar_position + i+2, 0, 55, 0, 0);
-        turnOn(caterpillar_position + i+3, 0, 55, 0, 0);
-        turnOn(caterpillar_position + i+4, 55, 0, 0, 30);
-        turnOff(caterpillar_position + i - 1,0);
+        {
+          turnOff(caterpillar_position + i - 1, 0);
+          turnOn(caterpillar_position + i, 0, 55, 0, 0);
+          turnOn(caterpillar_position + i + 1, 0, 55, 0, 0);
+          turnOn(caterpillar_position + i + 2, 0, 55, 0, 0);
+          turnOn(caterpillar_position + i + 3, 0, 55, 0, 0);
+          turnOn(caterpillar_position + i + 4, 55, 0, 0, 30);
+        }
+        caterpillar_position = touch_position;
+        prev_touch_position = touch_position;
       }
-      caterpillar_position = touch_position;
-      prev_touch_position = touch_position;
     }
   }
 }
 
 void touchTurnOff(int touch_position) {
-{
-    if (!begin_flag) {
-      allTurnOn(55, 55, 55);
-      begin_flag = true;
+
+
+  if (!begin_flag && getMotion() != 0) {
+    allTurnOn(55, 55, 55);
+    begin_flag = true;
+  }
+
+  if (touch_position >= 0) {
+    for (int i = 0; i <= 2; i++) {
+      turnOff(touch_position + i, 0);
+      turnOff(touch_position - i, 0);
     }
   }
 
-  for (int i = 0; i <= 2; i++) {
-    turnOff(touch_position + i, 0);
-    turnOff(touch_position - i, 0);
+}
+
+void custom(int dPosition) {
+
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 15; j++) {
+      if (i != 0) {
+        turnOff(j + (14 * i) - 1 , 100);
+      }
+      if (j == 14) {
+        turnOn(j + 14 * i, r[j], g[j], b[j], 100);
+      } else {
+        turnOn(j + 14 * i, r[j], g[j], b[j], 0);
+      }
+    }
   }
-
-}
-
-void custom(){
-
-for(i = 0; i < 10; i++){
-
-  delay(100);
-}
-  
 }
 
 void turnOn(int pixel, int r , int g, int b, int delayval) {
@@ -93,13 +104,14 @@ void turnOff(int pixel, int delayval) {
 }
 
 void allTurnOn(int r , int g, int b) {
-  for (int i = 0; i <= NUMPIXELS; i++) {
+  for (int i = 0; i < NUMPIXELS; i++) {
     turnOn(i, r, g, b, 0);
   }
+  delay(10);
 }
 
 void allTurnOff() {
-  for (int i = 0; i <= NUMPIXELS; i++) {
+  for (int i = 0; i < NUMPIXELS; i++) {
     turnOff(i, 0);
   }
 }
